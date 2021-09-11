@@ -17,7 +17,7 @@ _architectures="i686-w64-mingw32 x86_64-w64-mingw32"
 
 prepare() {
   cd "${srcdir}/gc-${pkgver}"
-  ./autogen.sh
+  autoreconf -fiv
 }
 
 build() {
@@ -25,6 +25,7 @@ build() {
   for _arch in ${_architectures}; do
     mkdir -p build-${_arch} && pushd build-${_arch}
     export lt_cv_deplibs_check_method='pass_all'
+    CFLAGS+=" -fcommon" \
     ${_arch}-configure \
       --enable-threads=posix \
       --disable-dependency-tracking \
